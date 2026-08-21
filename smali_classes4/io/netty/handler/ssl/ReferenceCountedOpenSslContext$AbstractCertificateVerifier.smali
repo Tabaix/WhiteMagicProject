@@ -1,0 +1,209 @@
+.class abstract Lio/netty/handler/ssl/ReferenceCountedOpenSslContext$AbstractCertificateVerifier;
+.super Lio/netty/internal/tcnative/CertificateVerifier;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lio/netty/handler/ssl/ReferenceCountedOpenSslContext;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x409
+    name = "AbstractCertificateVerifier"
+.end annotation
+
+
+# instance fields
+.field private final engines:Ljava/util/Map;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/Map<",
+            "Ljava/lang/Long;",
+            "Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+
+# direct methods
+.method public constructor <init>(Ljava/util/Map;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/util/Map<",
+            "Ljava/lang/Long;",
+            "Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;",
+            ">;)V"
+        }
+    .end annotation
+
+    invoke-direct {p0}, Lio/netty/internal/tcnative/CertificateVerifier;-><init>()V
+
+    iput-object p1, p0, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext$AbstractCertificateVerifier;->engines:Ljava/util/Map;
+
+    return-void
+.end method
+
+.method private static translateToError(Ljava/lang/Throwable;)I
+    .locals 2
+
+    instance-of v0, p0, Ljava/security/cert/CertificateRevokedException;
+
+    if-eqz v0, :cond_0
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_REVOKED:I
+
+    return p0
+
+    :cond_0
+    invoke-virtual {p0}, Ljava/lang/Throwable;->getCause()Ljava/lang/Throwable;
+
+    move-result-object p0
+
+    :goto_0
+    if-eqz p0, :cond_4
+
+    instance-of v0, p0, Ljava/security/cert/CertPathValidatorException;
+
+    if-eqz v0, :cond_3
+
+    move-object v0, p0
+
+    check-cast v0, Ljava/security/cert/CertPathValidatorException;
+
+    invoke-virtual {v0}, Ljava/security/cert/CertPathValidatorException;->getReason()Ljava/security/cert/CertPathValidatorException$Reason;
+
+    move-result-object v0
+
+    sget-object v1, Ljava/security/cert/CertPathValidatorException$BasicReason;->EXPIRED:Ljava/security/cert/CertPathValidatorException$BasicReason;
+
+    if-ne v0, v1, :cond_1
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_HAS_EXPIRED:I
+
+    return p0
+
+    :cond_1
+    sget-object v1, Ljava/security/cert/CertPathValidatorException$BasicReason;->NOT_YET_VALID:Ljava/security/cert/CertPathValidatorException$BasicReason;
+
+    if-ne v0, v1, :cond_2
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_NOT_YET_VALID:I
+
+    return p0
+
+    :cond_2
+    sget-object v1, Ljava/security/cert/CertPathValidatorException$BasicReason;->REVOKED:Ljava/security/cert/CertPathValidatorException$BasicReason;
+
+    if-ne v0, v1, :cond_3
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_REVOKED:I
+
+    return p0
+
+    :cond_3
+    invoke-virtual {p0}, Ljava/lang/Throwable;->getCause()Ljava/lang/Throwable;
+
+    move-result-object p0
+
+    goto :goto_0
+
+    :cond_4
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_UNSPECIFIED:I
+
+    return p0
+.end method
+
+
+# virtual methods
+.method public final verify(J[[BLjava/lang/String;)I
+    .locals 1
+
+    iget-object v0, p0, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext$AbstractCertificateVerifier;->engines:Ljava/util/Map;
+
+    invoke-static {p1, p2}, Ljava/lang/Long;->valueOf(J)Ljava/lang/Long;
+
+    move-result-object p1
+
+    invoke-interface {v0, p1}, Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;
+
+    if-nez p1, :cond_0
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_UNSPECIFIED:I
+
+    return p0
+
+    :cond_0
+    invoke-static {p3}, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext;->certificates([[B)[Ljava/security/cert/X509Certificate;
+
+    move-result-object p2
+
+    :try_start_0
+    invoke-virtual {p0, p1, p2, p4}, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext$AbstractCertificateVerifier;->verify(Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;[Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_OK:I
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    return p0
+
+    :catchall_0
+    move-exception p0
+
+    invoke-static {}, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext;->access$200()Lio/netty/util/internal/logging/InternalLogger;
+
+    move-result-object p2
+
+    const-string p3, "verification of certificate failed"
+
+    invoke-interface {p2, p3, p0}, Lio/netty/util/internal/logging/InternalLogger;->debug(Ljava/lang/String;Ljava/lang/Throwable;)V
+
+    invoke-virtual {p1, p0}, Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;->initHandshakeException(Ljava/lang/Throwable;)V
+
+    instance-of p1, p0, Lio/netty/handler/ssl/OpenSslCertificateException;
+
+    if-eqz p1, :cond_1
+
+    check-cast p0, Lio/netty/handler/ssl/OpenSslCertificateException;
+
+    invoke-virtual {p0}, Lio/netty/handler/ssl/OpenSslCertificateException;->errorCode()I
+
+    move-result p0
+
+    return p0
+
+    :cond_1
+    instance-of p1, p0, Ljava/security/cert/CertificateExpiredException;
+
+    if-eqz p1, :cond_2
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_HAS_EXPIRED:I
+
+    return p0
+
+    :cond_2
+    instance-of p1, p0, Ljava/security/cert/CertificateNotYetValidException;
+
+    if-eqz p1, :cond_3
+
+    sget p0, Lio/netty/internal/tcnative/CertificateVerifier;->X509_V_ERR_CERT_NOT_YET_VALID:I
+
+    return p0
+
+    :cond_3
+    invoke-static {p0}, Lio/netty/handler/ssl/ReferenceCountedOpenSslContext$AbstractCertificateVerifier;->translateToError(Ljava/lang/Throwable;)I
+
+    move-result p0
+
+    return p0
+.end method
+
+.method public abstract verify(Lio/netty/handler/ssl/ReferenceCountedOpenSslEngine;[Ljava/security/cert/X509Certificate;Ljava/lang/String;)V
+.end method

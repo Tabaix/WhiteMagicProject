@@ -1,0 +1,49 @@
+.class public final Ljl3;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# instance fields
+.field public final a:I
+
+.field public b:[I
+
+
+# direct methods
+.method public constructor <init>(I[I)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput p1, p0, Ljl3;->a:I
+
+    iput-object p2, p0, Ljl3;->b:[I
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a()[I
+    .locals 0
+
+    iget-object p0, p0, Ljl3;->b:[I
+
+    return-object p0
+.end method
+
+.method public final b()I
+    .locals 0
+
+    iget p0, p0, Ljl3;->a:I
+
+    return p0
+.end method
+
+.method public final c([I)V
+    .locals 0
+
+    iput-object p1, p0, Ljl3;->b:[I
+
+    return-void
+.end method

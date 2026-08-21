@@ -1,0 +1,425 @@
+.class final Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;
+.super Lkotlin/coroutines/jvm/internal/SuspendLambda;
+.source "SourceFile"
+
+# interfaces
+.implements Lta2;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = null
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Lkotlin/coroutines/jvm/internal/SuspendLambda;",
+        "Lta2;"
+    }
+.end annotation
+
+.annotation runtime Lh71;
+    c = "com.blackmagicdesign.android.camera.model.HardwareModel$1$4$1"
+    f = "HardwareModel.kt"
+    l = {}
+    m = "invokeSuspend"
+    v = 0x2
+.end annotation
+
+.annotation runtime Lkotlin/Metadata;
+    d1 = {
+        "\u0000\u000e\n\u0002\u0010\u0007\n\u0000\n\u0002\u0018\u0002\n\u0002\u0008\u0002\u0010\u0003\u001a\u00020\u00022\u0006\u0010\u0001\u001a\u00020\u0000H\n\u00a2\u0006\u0004\u0008\u0003\u0010\u0004"
+    }
+    d2 = {
+        "",
+        "raw",
+        "Laz6;",
+        "<anonymous>",
+        "(F)V"
+    }
+    k = 0x3
+    mv = {
+        0x2,
+        0x3,
+        0x0
+    }
+.end annotation
+
+
+# instance fields
+.field synthetic F$0:F
+
+.field label:I
+
+.field final synthetic this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+
+# direct methods
+.method public constructor <init>(Lcom/blackmagicdesign/android/camera/model/q;Ll11;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Lcom/blackmagicdesign/android/camera/model/q;",
+            "Ll11;",
+            ")V"
+        }
+    .end annotation
+
+    iput-object p1, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    const/4 p1, 0x2
+
+    invoke-direct {p0, p1, p2}, Lkotlin/coroutines/jvm/internal/SuspendLambda;-><init>(ILl11;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final create(Ljava/lang/Object;Ll11;)Ll11;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Ljava/lang/Object;",
+            "Ll11;",
+            ")",
+            "Ll11;"
+        }
+    .end annotation
+
+    new-instance v0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    invoke-direct {v0, p0, p2}, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;-><init>(Lcom/blackmagicdesign/android/camera/model/q;Ll11;)V
+
+    check-cast p1, Ljava/lang/Number;
+
+    invoke-virtual {p1}, Ljava/lang/Number;->floatValue()F
+
+    move-result p0
+
+    iput p0, v0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->F$0:F
+
+    return-object v0
+.end method
+
+.method public final invoke(FLl11;)Ljava/lang/Object;
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(F",
+            "Ll11;",
+            ")",
+            "Ljava/lang/Object;"
+        }
+    .end annotation
+
+    invoke-static {p1}, Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;
+
+    move-result-object p1
+
+    invoke-virtual {p0, p1, p2}, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->create(Ljava/lang/Object;Ll11;)Ll11;
+
+    move-result-object p0
+
+    check-cast p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;
+
+    sget-object p1, Laz6;->a:Laz6;
+
+    invoke-virtual {p0, p1}, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public bridge synthetic invoke(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    .line 17
+    check-cast p1, Ljava/lang/Number;
+
+    invoke-virtual {p1}, Ljava/lang/Number;->floatValue()F
+
+    move-result p1
+
+    check-cast p2, Ll11;
+
+    invoke-virtual {p0, p1, p2}, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->invoke(FLl11;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public final invokeSuspend(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 7
+
+    iget v0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->F$0:F
+
+    sget-object v1, Lkotlin/coroutines/intrinsics/CoroutineSingletons;->COROUTINE_SUSPENDED:Lkotlin/coroutines/intrinsics/CoroutineSingletons;
+
+    iget v1, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->label:I
+
+    const/4 v2, 0x0
+
+    if-nez v1, :cond_a
+
+    invoke-static {p1}, Lkotlin/b;->b(Ljava/lang/Object;)V
+
+    iget-object p1, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p1, p1, Lcom/blackmagicdesign/android/camera/model/q;->e:Lcom/blackmagicdesign/android/hardware/bmdemand/a;
+
+    iget-object p1, p1, Lcom/blackmagicdesign/android/hardware/bmdemand/a;->d:Lo95;
+
+    iget-object p1, p1, Lo95;->c:Lsa6;
+
+    invoke-interface {p1}, Lsa6;->getValue()Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Ljava/lang/Boolean;
+
+    invoke-virtual {p1}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result p1
+
+    sget-object v1, Laz6;->a:Laz6;
+
+    if-nez p1, :cond_0
+
+    return-object v1
+
+    :cond_0
+    iget-object p1, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p1, p1, Lcom/blackmagicdesign/android/camera/model/q;->d:Lcom/blackmagicdesign/android/settings/o;
+
+    iget-object p1, p1, Lcom/blackmagicdesign/android/settings/o;->I0:Lo95;
+
+    iget-object p1, p1, Lo95;->c:Lsa6;
+
+    invoke-interface {p1}, Lsa6;->getValue()Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Lpz5;
+
+    iget-object v3, p1, Lpz5;->w0:Lcom/blackmagicdesign/android/utils/entity/ZoomRockerDirection;
+
+    sget-object v4, Lcom/blackmagicdesign/android/utils/entity/ZoomRockerDirection;->REVERSE:Lcom/blackmagicdesign/android/utils/entity/ZoomRockerDirection;
+
+    if-ne v3, v4, :cond_1
+
+    neg-float v0, v0
+
+    :cond_1
+    iget-object p1, p1, Lpz5;->x0:Lcom/blackmagicdesign/android/utils/entity/DemandDialParameter;
+
+    sget-object v3, Lcom/blackmagicdesign/android/camera/model/n;->a:[I
+
+    invoke-virtual {p1}, Ljava/lang/Enum;->ordinal()I
+
+    move-result p1
+
+    aget p1, v3, p1
+
+    const/4 v3, 0x3
+
+    const/4 v4, 0x1
+
+    if-eq p1, v4, :cond_6
+
+    const/4 v4, 0x2
+
+    const/high16 v5, 0x40000000    # 2.0f
+
+    const/high16 v6, 0x3f800000    # 1.0f
+
+    if-eq p1, v4, :cond_5
+
+    if-eq p1, v3, :cond_4
+
+    const/4 v3, 0x4
+
+    if-eq p1, v3, :cond_3
+
+    const/4 v3, 0x5
+
+    if-ne p1, v3, :cond_2
+
+    add-float/2addr v0, v6
+
+    div-float/2addr v0, v5
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/q;->d:Lcom/blackmagicdesign/android/settings/o;
+
+    invoke-virtual {p0, v0}, Lcom/blackmagicdesign/android/settings/o;->c0(F)V
+
+    return-object v1
+
+    :cond_2
+    invoke-static {}, Lel;->l()V
+
+    return-object v2
+
+    :cond_3
+    add-float/2addr v0, v6
+
+    div-float/2addr v0, v5
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/q;->d:Lcom/blackmagicdesign/android/settings/o;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/settings/o;->R:Lkotlinx/coroutines/flow/b0;
+
+    invoke-static {v0, p0, v2}, Lg2;->t(FLkotlinx/coroutines/flow/b0;Ljava/lang/Object;)V
+
+    return-object v1
+
+    :cond_4
+    add-float/2addr v0, v6
+
+    div-float/2addr v0, v5
+
+    sget-object p1, Llz3;->a:Landroid/util/Range;
+
+    iget-object v2, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object v2, v2, Lcom/blackmagicdesign/android/camera/model/q;->a:Lcom/blackmagicdesign/android/camera/model/k;
+
+    iget-object v2, v2, Lcom/blackmagicdesign/android/camera/model/k;->V:Lo95;
+
+    iget-object v2, v2, Lo95;->c:Lsa6;
+
+    invoke-interface {v2}, Lsa6;->getValue()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/util/Range;
+
+    invoke-static {v0, p1, v2}, Llz3;->d(FLandroid/util/Range;Landroid/util/Range;)F
+
+    move-result p1
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/q;->a:Lcom/blackmagicdesign/android/camera/model/k;
+
+    invoke-virtual {p0, p1}, Lcom/blackmagicdesign/android/camera/model/k;->m0(F)V
+
+    return-object v1
+
+    :cond_5
+    add-float/2addr v0, v6
+
+    div-float/2addr v0, v5
+
+    sget-object p1, Llz3;->a:Landroid/util/Range;
+
+    iget-object v2, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object v2, v2, Lcom/blackmagicdesign/android/camera/model/q;->a:Lcom/blackmagicdesign/android/camera/model/k;
+
+    iget-object v2, v2, Lcom/blackmagicdesign/android/camera/model/k;->T:Lo95;
+
+    iget-object v2, v2, Lo95;->c:Lsa6;
+
+    invoke-interface {v2}, Lsa6;->getValue()Ljava/lang/Object;
+
+    move-result-object v2
+
+    check-cast v2, Landroid/util/Range;
+
+    invoke-static {v0, p1, v2}, Llz3;->d(FLandroid/util/Range;Landroid/util/Range;)F
+
+    move-result p1
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/q;->a:Lcom/blackmagicdesign/android/camera/model/k;
+
+    invoke-virtual {p0, p1}, Lcom/blackmagicdesign/android/camera/model/k;->n0(F)V
+
+    return-object v1
+
+    :cond_6
+    const/high16 p1, 0x42c80000    # 100.0f
+
+    mul-float/2addr v0, p1
+
+    iget-object v5, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget v5, v5, Lcom/blackmagicdesign/android/camera/model/q;->j:F
+
+    mul-float/2addr v0, v5
+
+    invoke-static {v0}, Les0;->V(F)I
+
+    move-result v0
+
+    const/4 v5, -0x2
+
+    if-gt v5, v0, :cond_8
+
+    if-ge v0, v3, :cond_8
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    iget-object p1, p0, Lcom/blackmagicdesign/android/camera/model/q;->i:Lba6;
+
+    if-eqz p1, :cond_7
+
+    invoke-virtual {p1, v2}, Lkotlinx/coroutines/d;->cancel(Ljava/util/concurrent/CancellationException;)V
+
+    :cond_7
+    iput-object v2, p0, Lcom/blackmagicdesign/android/camera/model/q;->i:Lba6;
+
+    return-object v1
+
+    :cond_8
+    invoke-static {v0}, Ljava/lang/Math;->abs(I)I
+
+    move-result v2
+
+    int-to-float v2, v2
+
+    div-float/2addr v2, p1
+
+    const p1, 0x3c23d70a    # 0.01f
+
+    mul-float/2addr v2, p1
+
+    iget-object p0, p0, Lcom/blackmagicdesign/android/camera/model/HardwareModel$1$4$1;->this$0:Lcom/blackmagicdesign/android/camera/model/q;
+
+    if-lez v0, :cond_9
+
+    goto :goto_0
+
+    :cond_9
+    const/4 v4, 0x0
+
+    :goto_0
+    invoke-virtual {p0, v4, v2}, Lcom/blackmagicdesign/android/camera/model/q;->c(ZF)V
+
+    return-object v1
+
+    :cond_a
+    const-string p0, "call to \'resume\' before \'invoke\' with coroutine"
+
+    invoke-static {p0}, Lel;->n(Ljava/lang/String;)V
+
+    return-object v2
+.end method

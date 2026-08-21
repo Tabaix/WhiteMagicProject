@@ -1,0 +1,279 @@
+.class public final Ls03;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# instance fields
+.field public final a:Lae7;
+
+.field public final b:Ljava/util/Collection;
+
+.field public final c:Z
+
+.field public final d:Z
+
+.field public final e:Z
+
+
+# direct methods
+.method public constructor <init>(Lae7;Ljava/util/Collection;I)V
+    .locals 10
+
+    iget-object v0, p1, Lae7;->a:Ljava/lang/Object;
+
+    sget-object v1, Lkotlin/reflect/jvm/internal/impl/load/java/typeEnhancement/NullabilityQualifier;->NOT_NULL:Lkotlin/reflect/jvm/internal/impl/load/java/typeEnhancement/NullabilityQualifier;
+
+    const/4 v2, 0x1
+
+    const/4 v3, 0x0
+
+    if-ne v0, v1, :cond_0
+
+    move v7, v2
+
+    goto :goto_0
+
+    :cond_0
+    move v7, v3
+
+    :goto_0
+    and-int/lit8 v0, p3, 0x8
+
+    if-eqz v0, :cond_1
+
+    move v8, v3
+
+    goto :goto_1
+
+    :cond_1
+    move v8, v2
+
+    :goto_1
+    and-int/lit8 p3, p3, 0x10
+
+    if-eqz p3, :cond_2
+
+    move v9, v3
+
+    :goto_2
+    move-object v4, p0
+
+    move-object v5, p1
+
+    move-object v6, p2
+
+    goto :goto_3
+
+    :cond_2
+    move v9, v2
+
+    goto :goto_2
+
+    :goto_3
+    invoke-direct/range {v4 .. v9}, Ls03;-><init>(Lae7;Ljava/util/Collection;ZZZ)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Lae7;Ljava/util/Collection;ZZZ)V
+    .locals 0
+
+    invoke-virtual {p2}, Ljava/lang/Object;->getClass()Ljava/lang/Class;
+
+    .line 33
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    .line 34
+    iput-object p1, p0, Ls03;->a:Lae7;
+
+    .line 35
+    iput-object p2, p0, Ls03;->b:Ljava/util/Collection;
+
+    .line 36
+    iput-boolean p3, p0, Ls03;->c:Z
+
+    .line 37
+    iput-boolean p4, p0, Ls03;->d:Z
+
+    .line 38
+    iput-boolean p5, p0, Ls03;->e:Z
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final equals(Ljava/lang/Object;)Z
+    .locals 4
+
+    const/4 v0, 0x1
+
+    if-ne p0, p1, :cond_0
+
+    return v0
+
+    :cond_0
+    instance-of v1, p1, Ls03;
+
+    const/4 v2, 0x0
+
+    if-nez v1, :cond_1
+
+    return v2
+
+    :cond_1
+    check-cast p1, Ls03;
+
+    iget-object v1, p0, Ls03;->a:Lae7;
+
+    iget-object v3, p1, Ls03;->a:Lae7;
+
+    invoke-static {v1, v3}, Lqz2;->o(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_2
+
+    return v2
+
+    :cond_2
+    iget-object v1, p0, Ls03;->b:Ljava/util/Collection;
+
+    iget-object v3, p1, Ls03;->b:Ljava/util/Collection;
+
+    invoke-static {v1, v3}, Lqz2;->o(Ljava/lang/Object;Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_3
+
+    return v2
+
+    :cond_3
+    iget-boolean v1, p0, Ls03;->c:Z
+
+    iget-boolean v3, p1, Ls03;->c:Z
+
+    if-eq v1, v3, :cond_4
+
+    return v2
+
+    :cond_4
+    iget-boolean v1, p0, Ls03;->d:Z
+
+    iget-boolean v3, p1, Ls03;->d:Z
+
+    if-eq v1, v3, :cond_5
+
+    return v2
+
+    :cond_5
+    iget-boolean p0, p0, Ls03;->e:Z
+
+    iget-boolean p1, p1, Ls03;->e:Z
+
+    if-eq p0, p1, :cond_6
+
+    return v2
+
+    :cond_6
+    return v0
+.end method
+
+.method public final hashCode()I
+    .locals 3
+
+    iget-object v0, p0, Ls03;->a:Lae7;
+
+    invoke-virtual {v0}, Lae7;->hashCode()I
+
+    move-result v0
+
+    const/16 v1, 0x1f
+
+    mul-int/2addr v0, v1
+
+    iget-object v2, p0, Ls03;->b:Ljava/util/Collection;
+
+    invoke-virtual {v2}, Ljava/lang/Object;->hashCode()I
+
+    move-result v2
+
+    add-int/2addr v2, v0
+
+    mul-int/2addr v2, v1
+
+    iget-boolean v0, p0, Ls03;->c:Z
+
+    invoke-static {v2, v1, v0}, Lml4;->b(IIZ)I
+
+    move-result v0
+
+    iget-boolean v2, p0, Ls03;->d:Z
+
+    invoke-static {v0, v1, v2}, Lml4;->b(IIZ)I
+
+    move-result v0
+
+    iget-boolean p0, p0, Ls03;->e:Z
+
+    invoke-static {p0}, Ljava/lang/Boolean;->hashCode(Z)I
+
+    move-result p0
+
+    add-int/2addr p0, v0
+
+    return p0
+.end method
+
+.method public final toString()Ljava/lang/String;
+    .locals 2
+
+    new-instance v0, Ljava/lang/StringBuilder;
+
+    const-string v1, "JavaDefaultQualifiers(nullabilityQualifier="
+
+    invoke-direct {v0, v1}, Ljava/lang/StringBuilder;-><init>(Ljava/lang/String;)V
+
+    iget-object v1, p0, Ls03;->a:Lae7;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    const-string v1, ", qualifierApplicabilityTypes="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget-object v1, p0, Ls03;->b:Ljava/util/Collection;
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
+
+    const-string v1, ", definitelyNotNull="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget-boolean v1, p0, Ls03;->c:Z
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    const-string v1, ", preferQualifierOverBound="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget-boolean v1, p0, Ls03;->d:Z
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Z)Ljava/lang/StringBuilder;
+
+    const-string v1, ", preferQualifierOverSupertype="
+
+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+
+    iget-boolean p0, p0, Ls03;->e:Z
+
+    const/16 v1, 0x29
+
+    invoke-static {v0, p0, v1}, Ll92;->p(Ljava/lang/StringBuilder;ZC)Ljava/lang/String;
+
+    move-result-object p0
+
+    return-object p0
+.end method

@@ -1,0 +1,134 @@
+.class public abstract Lkotlin/jvm/internal/MutablePropertyReference1;
+.super Lkotlin/jvm/internal/MutablePropertyReference;
+.source "SourceFile"
+
+# interfaces
+.implements Lt73;
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Lkotlin/jvm/internal/MutablePropertyReference;-><init>()V
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/lang/Object;)V
+    .locals 0
+
+    .line 4
+    invoke-direct {p0, p1}, Lkotlin/jvm/internal/MutablePropertyReference;-><init>(Ljava/lang/Object;)V
+
+    return-void
+.end method
+
+.method public constructor <init>(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;I)V
+    .locals 0
+
+    .line 5
+    invoke-direct/range {p0 .. p5}, Lkotlin/jvm/internal/MutablePropertyReference;-><init>(Ljava/lang/Object;Ljava/lang/Class;Ljava/lang/String;Ljava/lang/String;I)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public computeReflected()Lt63;
+    .locals 1
+
+    sget-object v0, Lad5;->a:Led5;
+
+    invoke-virtual {v0, p0}, Led5;->f(Lkotlin/jvm/internal/MutablePropertyReference1;)Lt73;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public abstract synthetic get(Ljava/lang/Object;)Ljava/lang/Object;
+.end method
+
+.method public getDelegate(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    invoke-virtual {p0}, Lkotlin/jvm/internal/PropertyReference;->getReflected()Lj83;
+
+    move-result-object p0
+
+    check-cast p0, Lt73;
+
+    invoke-interface {p0, p1}, Lg83;->getDelegate(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public bridge synthetic getGetter()Lc83;
+    .locals 0
+
+    .line 11
+    invoke-virtual {p0}, Lkotlin/jvm/internal/MutablePropertyReference1;->getGetter()Lf83;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public getGetter()Lf83;
+    .locals 0
+
+    invoke-virtual {p0}, Lkotlin/jvm/internal/PropertyReference;->getReflected()Lj83;
+
+    move-result-object p0
+
+    check-cast p0, Lt73;
+
+    invoke-interface {p0}, Lg83;->getGetter()Lf83;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public bridge synthetic getSetter()Lp73;
+    .locals 0
+
+    .line 11
+    invoke-virtual {p0}, Lkotlin/jvm/internal/MutablePropertyReference1;->getSetter()Ls73;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public getSetter()Ls73;
+    .locals 0
+
+    invoke-virtual {p0}, Lkotlin/jvm/internal/PropertyReference;->getReflected()Lj83;
+
+    move-result-object p0
+
+    check-cast p0, Lt73;
+
+    invoke-interface {p0}, Lt73;->getSetter()Ls73;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public invoke(Ljava/lang/Object;)Ljava/lang/Object;
+    .locals 0
+
+    invoke-virtual {p0, p1}, Lkotlin/jvm/internal/MutablePropertyReference1;->get(Ljava/lang/Object;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    return-object p0
+.end method
+
+.method public abstract synthetic set(Ljava/lang/Object;Ljava/lang/Object;)V
+.end method

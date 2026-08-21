@@ -1,0 +1,591 @@
+openapi: 3.0.1
+info:
+  title: Slate Control API
+  description: API to manage digital slate data for Blackmagic Design products.
+  version: 1.2.0
+servers:
+  - url: /control/api/v1
+tags:
+- name: Slate
+  description: Slate Control API
+paths:
+  /slates/nextClip:
+    get:
+      operationId: getSlateNextClip
+      summary: Retrieve the digital slate for the next clip.
+      description: Returns the slate metadata that will be used for the next recorded clip.
+      tags:
+      - Slate
+      responses:
+        200:
+          description: Returns the slate data for the next clip.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlateData'
+        409:
+          description: Slate data is not available.
+    put:
+      operationId: setSlateNextClip
+      summary: Update the slate data for the next clip.
+      description: Updates metadata fields for the next clip's slate. Partial updates are supported.
+      tags:
+      - Slate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlateUpdate'
+      responses:
+        204:
+          description: Successfully updated the slate data.
+        400:
+          description: Invalid data in request.
+        409:
+          description: Partial update with errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+        500:
+          description: Internal server error.
+
+  /slates/takeAutoIncrement:
+    get:
+      operationId: getSlateTakeAutoIncrement
+      summary: Get the auto-increment take setting.
+      description: Returns whether the camera is configured to automatically increment take numbers after recording.
+      tags:
+      - Slate
+      responses:
+        200:
+          description: Returns the auto-increment take setting.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  enabled:
+                    type: boolean
+        409:
+          description: Slate is not available.
+    put:
+      operationId: setSlateTakeAutoIncrement
+      summary: Update the auto-increment take setting.
+      description: Enables or disables automatic incrementing of take numbers after recording.
+      tags:
+      - Slate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                  description: Enable/disable auto-increment take setting
+              required:
+                - enabled
+      responses:
+        204:
+          description: Successfully updated the setting.
+        400:
+          description: Invalid request data.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+
+  /slates/nextClip/resetProjectData:
+    post:
+      operationId: resetSlateNextClipProjectData
+      summary: Reset the project data for the next clip's slate.
+      description: Clears project-related fields (project name, director, camera name, camera operator) from the next clip's slate.
+      tags:
+      - Slate
+      responses:
+        204:
+          description: Project data reset successfully.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+
+  /slates/clips/{deviceName}/{path}/resetProjectData:
+    post:
+      operationId: resetSlateClipProjectData
+      summary: Reset the project data for a specific clip's slate.
+      description: Clears project-related fields (project name, director, camera name, camera operator) from a specific clip's slate.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateDeviceName'
+        - $ref: '#/components/parameters/slatePath'
+      responses:
+        204:
+          description: Project data reset successfully.
+        404:
+          description: Clip not found.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+
+  /slates/nextClip/resetLensData:
+    post:
+      operationId: resetSlateNextClipLensData
+      summary: Reset the lens data for the next clip's slate.
+      description: Clears lens-related fields (lens type, iris, focal length, distance, filter) from the next clip's slate.
+      tags:
+      - Slate
+      responses:
+        204:
+          description: Lens data reset successfully.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+
+  /slates/clips/{deviceName}/{path}/resetLensData:
+    post:
+      operationId: resetSlateClipLensData
+      summary: Reset the lens data for a specific clip's slate.
+      description: Clears lens-related fields (lens type, iris, focal length, distance, filter) from a specific clip's slate.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateDeviceName'
+        - $ref: '#/components/parameters/slatePath'
+      responses:
+        204:
+          description: Lens data reset successfully.
+        404:
+          description: Clip not found.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+
+  /slates/clips/{deviceName}/{path}:
+    get:
+      operationId: getSlateClip
+      summary: Retrieve slate data for a specific clip.
+      description: Returns the metadata slate for a specific existing clip.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateDeviceName'
+        - $ref: '#/components/parameters/slatePath'
+      responses:
+        200:
+          description: Returns the slate data for the specified clip.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlateData'
+        404:
+          description: Clip not found.
+        409:
+          description: Slate is not available.
+    put:
+      operationId: setSlateClip
+      summary: Update the slate data for a specific clip.
+      description: Updates metadata fields for a specific clip's slate. Partial updates are supported.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateDeviceName'
+        - $ref: '#/components/parameters/slatePath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlateUpdate'
+      responses:
+        204:
+          description: Successfully updated the slate data.
+        400:
+          description: Invalid data in request.
+        404:
+          description: Clip not found.
+        409:
+          description: Partial update with errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+
+  /slates/lastClip:
+    get:
+      operationId: getSlateLastClip
+      summary: Retrieve slate data for the last recorded clip.
+      description: Returns the metadata slate for the most recently recorded clip.
+      tags:
+      - Slate
+      responses:
+        200:
+          description: Returns the slate data for the last recorded clip.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlateData'
+        409:
+          description: Slate is not available or no clip has been recorded.
+    put:
+      operationId: setSlateLastClip
+      summary: Update the slate data for the last recorded clip.
+      description: Updates metadata fields for the last recorded clip's slate. Partial updates are supported.
+      tags:
+      - Slate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlateUpdate'
+      responses:
+        204:
+          description: Successfully updated the slate data.
+        400:
+          description: Invalid data in request.
+        409:
+          description: Partial update with errors or no clip has been recorded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetails'
+
+  /slates/lastClip/resetProjectData:
+    post:
+      operationId: resetSlateLastClipProjectData
+      summary: Reset the project data for the last recorded clip's slate.
+      description: Clears project-related fields from the last recorded clip's slate.
+      tags:
+      - Slate
+      responses:
+        204:
+          description: Project data reset successfully.
+        409:
+          description: Slate is not available or no clip has been recorded.
+
+  /slates/lastClip/resetLensData:
+    post:
+      operationId: resetSlateLastClipLensData
+      summary: Reset the lens data for the last recorded clip's slate.
+      description: Clears lens-related fields from the last recorded clip's slate.
+      tags:
+      - Slate
+      responses:
+        204:
+          description: Lens data reset successfully.
+        409:
+          description: Slate is not available or no clip has been recorded.
+        500:
+          description: Internal server error.
+
+  /slates/{target}/{category}/{property}:
+    get:
+      operationId: getSlateProperty
+      summary: Get individual slate property value.
+      description: Retrieves a specific property value from the slate. This allows granular access to individual slate fields.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateTarget'
+        - $ref: '#/components/parameters/slateCategory'
+        - $ref: '#/components/parameters/slateProperty'
+      responses:
+        200:
+          description: Property value retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlatePropertyValue'
+        400:
+          description: Invalid property path.
+        404:
+          description: Property not found.
+        409:
+          description: Slate is not available.
+        500:
+          description: Internal server error.
+    put:
+      operationId: setSlateProperty
+      summary: Set individual slate property value.
+      description: Updates a specific property value in the slate. This allows granular updates to individual slate fields.
+      tags:
+      - Slate
+      parameters:
+        - $ref: '#/components/parameters/slateTarget'
+        - $ref: '#/components/parameters/slateCategory'
+        - $ref: '#/components/parameters/slateProperty'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SlatePropertyValue'
+      responses:
+        204:
+          description: Property value updated successfully.
+        400:
+          description: Invalid property value or path.
+        403:
+          description: Property is read-only (e.g. `clipName`, `slateFor`).
+        404:
+          description: Property not found.
+        409:
+          description: Slate is not available or property cannot be modified.
+        500:
+          description: Internal server error.
+
+components:
+  parameters:
+    slateDeviceName:
+      in: path
+      name: deviceName
+      required: true
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9\-]+$'
+        maxLength: 64
+      example: "A001-nvme4"
+      description: Name of the device where the clip is stored. This is the same as the web browser's device name.
+    slatePath:
+      in: path
+      name: path
+      required: true
+      schema:
+        type: string
+        maxLength: 255
+      example: "Clip001.braw"
+      description: Path to the clip.
+    slateTarget:
+      in: path
+      name: target
+      required: true
+      schema:
+        type: string
+        enum: ["nextClip", "lastClip"]
+      description: Target slate (nextClip for upcoming recording, lastClip for most recent recording).
+    slateCategory:
+      in: path
+      name: category
+      required: true
+      schema:
+        type: string
+        enum: ["clip", "lens", "project"]
+      description: Category of the property.
+    slateProperty:
+      in: path
+      name: property
+      required: true
+      schema:
+        type: string
+        enum:
+          - clipName
+          - slateFor
+          - reel
+          - scene
+          - shotType
+          - take
+          - takeType
+          - sceneLocation
+          - sceneTime
+          - goodTake
+          - lensType
+          - iris
+          - focalLength
+          - distance
+          - filter
+          - projectName
+          - director
+          - camera
+          - cameraOperator
+      description: |
+        Property name within the category. Many combinations of (category, property) are
+        invalid and return 404; valid combinations:
+        - clip: clipName, slateFor, reel, scene, shotType, take, takeType, sceneLocation, sceneTime, goodTake
+        - lens: lensType, iris, focalLength, distance, filter
+        - project: projectName, director, camera, cameraOperator
+        `clipName` and `slateFor` are read-only (PUT returns 403).
+  schemas:
+    SlatePropertyValue:
+      type: object
+      minProperties: 1
+      maxProperties: 1
+      additionalProperties:
+        anyOf:
+          - type: string
+            nullable: true
+          - type: integer
+            nullable: true
+          - type: boolean
+            nullable: true
+      description: Single-property object keyed by the path's property name.
+    SlateData:
+      type: object
+      properties:
+        clip:
+          type: object
+          properties:
+            clipName:
+              type: string
+              description: Name of the clip file.
+              example: "Next Clip"
+            reel:
+              $ref: '#/components/schemas/Reel'
+            scene:
+              $ref: '#/components/schemas/Scene'
+            sceneLocation:
+              $ref: '#/components/schemas/SceneLocation'
+            sceneTime:
+              $ref: '#/components/schemas/SceneTime'
+            shotType:
+              $ref: '#/components/schemas/ShotType'
+            slateFor:
+              $ref: '#/components/schemas/SlateFor'
+            take:
+              $ref: '#/components/schemas/Take'
+            takeType:
+              $ref: '#/components/schemas/TakeType'
+            goodTake:
+              type: boolean
+              nullable: true
+              description: Flag indicating if this was marked as a good take. Only available for existing clips, not for next clip; null when not applicable.
+        lens:
+          $ref: '#/components/schemas/Lens'
+        project:
+          $ref: '#/components/schemas/Project'
+    SlateUpdate:
+      type: object
+      properties:
+        clip:
+          type: object
+          properties:
+            reel:
+              $ref: '#/components/schemas/Reel'
+            scene:
+              $ref: '#/components/schemas/Scene'
+            take:
+              $ref: '#/components/schemas/Take'
+            shotType:
+              $ref: '#/components/schemas/ShotType'
+            takeType:
+              $ref: '#/components/schemas/TakeType'
+            sceneLocation:
+              $ref: '#/components/schemas/SceneLocation'
+            sceneTime:
+              $ref: '#/components/schemas/SceneTime'
+            goodTake:
+              type: boolean
+              description: Flag indicating if this was a good take. Cannot be set for next clip.
+        lens:
+          $ref: '#/components/schemas/Lens'
+        project:
+          $ref: '#/components/schemas/Project'
+    Reel:
+      type: integer
+      description: Reel number (1-999).
+      minimum: 1
+      maximum: 999
+      example: 1
+    Scene:
+      type: string
+      description: Scene identifier. Must include at least one non-zero, non-space, non-punctuation character. Numeric values cannot exceed 999.
+      example: "1"
+    ShotType:
+      type: string
+      description: Type of shot.
+      enum: ["None", "WS", "MS", "MCU", "CU", "BCU", "ECU"]
+      example: "MS"
+    SlateFor:
+      type: string
+      description: Indicates whether this slate is for an existing clip or the next clip to be recorded.
+      enum: ["Clip", "Next Clip"]
+      example: "Next Clip"
+    TakeType:
+      type: string
+      description: Type of take.
+      enum: ["None", "PU", "VFX", "SER"]
+      example: "None"
+    Take:
+      type: integer
+      description: Take number (1-99).
+      minimum: 1
+      maximum: 99
+      example: 1
+    SceneLocation:
+      type: string
+      description: Location of the scene (interior or exterior).
+      enum: ["Interior", "Exterior"]
+      example: "Interior"
+    SceneTime:
+      type: string
+      description: Time of day for the scene.
+      enum: ["Day", "Night"]
+      example: "Day"
+    Lens:
+      type: object
+      description: Lens-related metadata.
+      properties:
+        lensType:
+          type: string
+          description: Type or model of the lens.
+          example: "EF 50mm f/1.8 STM"
+        iris:
+          type: string
+          description: Iris/aperture setting. May not be editable if using a lens that reports iris electronically.
+          example: "f1.8"
+        focalLength:
+          type: string
+          description: Focal length of the lens. May not be editable if using a lens that reports focal length electronically.
+          example: "50mm"
+        distance:
+          type: string
+          description: Focus distance. May not be editable if using a lens that reports focus distance electronically.
+          example: "13'"
+        filter:
+          type: string
+          description: Filter used on the lens.
+          example: "ND2"
+    Project:
+      type: object
+      description: Project-related metadata.
+      properties:
+        projectName:
+          type: string
+          description: Name of the project. May not be editable if connected via HDMI CEC.
+          example: "My Film Project"
+        director:
+          type: string
+          description: Name of the director.
+          example: "Jane Director"
+        camera:
+          type: string
+          description: Name/identifier for this camera. May not be editable if connected via HDMI CEC.
+          example: "A Cam"
+        cameraOperator:
+          type: string
+          description: Name of the camera operator.
+          example: "John Operator"
+    ErrorDetails:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Partial set applied, see details for fields that failed to update."
+        details:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                example: "takeType"
+              message:
+                type: string
+                example: "Field 'takeType' was not in a valid format."

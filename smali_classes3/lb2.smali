@@ -1,0 +1,49 @@
+.class public final Llb2;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Lq12;
+
+
+# instance fields
+.field public synthetic c:Lo95;
+
+.field public synthetic f:I
+
+
+# virtual methods
+.method public final collect(Lr12;Ll11;)Ljava/lang/Object;
+    .locals 2
+
+    iget-object v0, p0, Llb2;->c:Lo95;
+
+    new-instance v1, Lcom/blackmagicdesign/android/settings/ui/category/functionbuttons/b;
+
+    iget p0, p0, Llb2;->f:I
+
+    invoke-direct {v1}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, v1, Lcom/blackmagicdesign/android/settings/ui/category/functionbuttons/b;->c:Lr12;
+
+    iput p0, v1, Lcom/blackmagicdesign/android/settings/ui/category/functionbuttons/b;->f:I
+
+    invoke-static {}, Ljava/lang/invoke/VarHandle;->storeStoreFence()V
+
+    iget-object p0, v0, Lo95;->c:Lsa6;
+
+    invoke-interface {p0, v1, p2}, Lq12;->collect(Lr12;Ll11;)Ljava/lang/Object;
+
+    move-result-object p0
+
+    sget-object p1, Lkotlin/coroutines/intrinsics/CoroutineSingletons;->COROUTINE_SUSPENDED:Lkotlin/coroutines/intrinsics/CoroutineSingletons;
+
+    if-ne p0, p1, :cond_0
+
+    return-object p0
+
+    :cond_0
+    sget-object p0, Laz6;->a:Laz6;
+
+    return-object p0
+.end method

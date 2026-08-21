@@ -1,0 +1,584 @@
+openapi: 3.0.1
+info:
+  title: System Control API
+  description: API for controlling the System Modes on Blackmagic Design products.
+  version: 1.2.0
+servers:
+- url: /control/api/v1
+tags:
+  - name: System
+    description: System Control API
+paths:
+  /system/audioCodec:
+    x-private: true
+    get:
+      operationId: getSystemAudioCodec
+      summary: Get the recording audio codec
+      description: Returns the currently configured audio codec used during recording. Only registered when the device is built with PrivateInterfaces enabled.
+      tags:
+      - System
+      responses:
+        200:
+          description: Current audio codec
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  audioCodec:
+                    type: string
+                    description: Audio codec identifier (serialised form)
+        404:
+          description: Endpoint not registered on this device (firmware built without PrivateInterfaces).
+    put:
+      operationId: setSystemAudioCodec
+      summary: Set the recording audio codec
+      tags:
+      - System
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - audioCodec
+              properties:
+                audioCodec:
+                  type: string
+                  description: Audio codec identifier (serialised form)
+      responses:
+        204:
+          description: Audio codec updated
+        400:
+          description: Unknown or unsupported audio codec
+  /system:
+    get:
+      operationId: getSystem
+      summary: Get device system information.
+      description: Returns a summary of system information including codec format and video format if supported by the device.
+      tags:
+      - System
+      responses:
+        200:
+          description: System summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemResponse'
+        204:
+          description: System information not available.
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/product:
+    get:
+      operationId: getSystemProduct
+      summary: Get device product information.
+      description: Returns product information including device name, product name, and software version.
+      tags:
+      - System
+      responses:
+        200:
+          description: Device product information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductInfo'
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedCodecFormats:
+    get:
+      operationId: getSystemSupportedCodecFormats
+      summary: Get the list of supported codecs.
+      description: Returns an array of supported codec formats available on the device.
+      tags:
+      - System
+      responses:
+        200:
+          description: List of supported codec formats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedCodecFormats'
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/codecFormat:
+    get:
+      operationId: getSystemCodecFormat
+      summary: Get the currently selected codec.
+      description: Returns the codec format currently in use on the device.
+      tags:
+      - System
+      responses:
+        200:
+          description: Current codec format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodecFormat'
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      operationId: setSystemCodecFormat
+      summary: Update the system codec.
+      description: Sets the device's codec format to use the specified codec and container.
+      tags:
+      - System
+      requestBody:
+        description: Update the system codec.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodecFormat'
+      responses:
+        204:
+          description: The codec updated successfully.
+        400:
+          description: The specified codec format is unsupported or invalid.
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/videoFormat:
+    get:
+      operationId: getSystemVideoFormat
+      summary: Get the currently selected video format.
+      description: Returns the video format currently in use on the device.
+      tags:
+      - System
+      responses:
+        200:
+          description: Current system video format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetVideoFormat'
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      operationId: setSystemVideoFormat
+      summary: Set the system video format.
+      description: Updates the device's video format using either a format name or detailed parameters.
+      tags:
+      - System
+      requestBody:
+        description: Update the system video format.
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/PutVideoFormatName'
+                - $ref: '#/components/schemas/PutVideoFormatDetailed'
+      responses:
+        204:
+          description: The video format updated successfully.
+        400:
+          description: Invalid request or unsupported format.
+        409:
+          description: Operation unsupported in the current state.
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedVideoFormats:
+    get:
+      operationId: getSystemSupportedVideoFormats
+      summary: Get the list of supported video formats for the current system state.
+      description: Returns an array of video formats supported by the device.
+      tags:
+      - System
+      responses:
+        200:
+          description: List of supported video formats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedVideoFormats'
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedFormats:
+    get:
+      operationId: getSystemSupportedFormats
+      summary: Get supported formats.
+      description: Returns a comprehensive list of supported format combinations including supported codecs, framerates, and resolutions.
+      tags:
+      - System
+      responses:
+        200:
+          description: List of supported formats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedFormats'
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/format:
+    get:
+      operationId: getSystemFormat
+      summary: Get current format.
+      description: Returns the complete current format including codec, record resolution, sensor resolution (if applicable), and framerate settings.
+      tags:
+      - System
+      responses:
+        200:
+          description: Current format.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Format'
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      operationId: setSystemFormat
+      summary: Set the format.
+      description: Updates the device's format including codec, resolutions, and framerate settings. All format parameters must be provided together as the system validates the complete format combination.
+      tags:
+      - System
+      requestBody:
+        description: Update the system format.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormatRequest'
+      responses:
+        204:
+          description: System format updated.
+        400:
+          description: Format is not supported.
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/dynamicRange:
+    get:
+      operationId: getSystemDynamicRange
+      summary: Get current dynamic range.
+      description: Returns the currently selected dynamic range setting.
+      tags:
+      - System
+      responses:
+        200:
+          description: Current dynamic range.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DynamicRangeResponse'
+        501:
+          description: This functionality is not implemented for the device in use.
+    put:
+      operationId: setSystemDynamicRange
+      summary: Set the dynamic range.
+      description: Updates the device's dynamic range setting.
+      tags:
+      - System
+      requestBody:
+        description: Update the dynamic range.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DynamicRangeRequest'
+      responses:
+        204:
+          description: Dynamic range updated successfully.
+        400:
+          description: Invalid or unsupported dynamic range.
+        501:
+          description: This functionality is not implemented for the device in use.
+  /system/supportedDynamicRanges:
+    get:
+      operationId: getSystemSupportedDynamicRanges
+      summary: Get supported dynamic ranges.
+      description: Returns an array of dynamic ranges supported by the device in its current configuration.
+      tags:
+      - System
+      responses:
+        200:
+          description: List of supported dynamic ranges.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportedDynamicRangesResponse'
+        501:
+          description: This functionality is not implemented for the device in use.
+components:
+  schemas:
+    SystemResponse:
+      type: object
+      description: The properties will be populated only with the values that are supported/implemented by the device in use.
+      properties:
+        codecFormat:
+          $ref: "#/components/schemas/CodecFormat"
+        videoFormat:
+          $ref: "#/components/schemas/GetVideoFormat"
+    ProductInfo:
+      type: object
+      description: Product information.
+      properties:
+        deviceName:
+          type: string
+          description: Name of device as displayed in Setup.
+          example: My Blackmagic Device
+        productName:
+          type: string
+          description: Device's product name.
+          example: Blackmagic Device
+        softwareVersion:
+          type: string
+          description: Software version running on device.
+          example: "1.0"
+    SupportedCodecFormats:
+      type: object
+      properties:
+        codecFormats:
+          type: array
+          items:
+            $ref: "#/components/schemas/CodecFormat"
+    CodecFormat:
+      type: object
+      description: Codec format configuration.
+      properties:
+        codec:
+          type: string
+          description: Codec serialised as string.
+          example: ProRes:HQ
+        container:
+          type: string
+          description: Multimedia container format.
+          example: MOV
+    SupportedVideoFormats:
+      type: object
+      description: List of supported video formats.
+      properties:
+        videoFormats:
+          type: array
+          description: List of video formats.
+          items:
+            type: string
+            description: Video format serialised as string.
+            example: "1920x1080p29.97"
+    FrameRate:
+      type: string
+      description: Frame rate.
+      example: "29.97"
+      enum:
+        - "23.98"
+        - "24.00"
+        - "24"
+        - "25.00"
+        - "25"
+        - "29.97"
+        - "30.00"
+        - "30"
+        - "47.95"
+        - "48.00"
+        - "48"
+        - "50.00"
+        - "50"
+        - "59.94"
+        - "60.00"
+        - "60"
+        - "119.88"
+        - "120.00"
+        - "120"
+    GetVideoFormat:
+      type: object
+      description: Video format configuration.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Video format serialised as a string.
+          example: 1920x1080p29.97
+        frameRate:
+          $ref: "#/components/schemas/FrameRate"
+        height:
+          type: number
+          description: Height dimension of video format.
+          example: 1080
+        width:
+          type: number
+          description: Width dimension of video format.
+          example: 1920
+        interlaced:
+          type: boolean
+          description: Is the display format interlaced?
+          example: false
+    PutVideoFormatDetailed:
+      type: object
+      required:
+        - frameRate
+        - height
+        - width
+      properties:
+        frameRate:
+          $ref: "#/components/schemas/FrameRate"
+        height:
+          type: number
+          description: Height dimension of video format.
+          example: 1080
+        width:
+          type: number
+          description: Width dimension of video format.
+          example: 1920
+        interlaced:
+          type: boolean
+          description: Is the display format interlaced?
+          example: false
+    PutVideoFormatName:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Video format serialised as a string.
+          example: 1920x1080p29.97
+          x-bmd-list-source:
+            from: /system/supportedVideoFormats
+            pointer: /videoFormats
+            extract: items
+    Resolution:
+      type: object
+      properties:
+        height:
+          type: number
+          description: Height of the resolution.
+          example: 2160
+        width:
+          type: number
+          description: Width of the resolution.
+          example: 3840
+    ResolutionDescriptor:
+      type: object
+      properties:
+        group:
+          type: string
+          description: Resolution group for UI display.
+          example: "UHD"
+        aspectRatio:
+          type: string
+          description: Aspect ratio of the resolution.
+          example: "16:9"
+        description:
+          type: string
+          description: Human-readable description of the resolution.
+          example: "4K UHD"
+        sensorArea:
+          type: string
+          description: Area of the sensor used for this resolution.
+          example: "4K"
+    SupportedFormats:
+      type: object
+      properties:
+        supportedFormats:
+          type: array
+          items:
+            $ref: '#/components/schemas/SupportedFormat'
+    SupportedFormat:
+      type: object
+      properties:
+        recordResolution:
+          $ref: '#/components/schemas/Resolution'
+        sensorResolution:
+          $ref: '#/components/schemas/Resolution'
+        codecs:
+          type: array
+          items:
+            type: string
+            example: BRaw:Q0
+        frameRates:
+          type: array
+          items:
+            $ref: '#/components/schemas/FrameRate'
+        minOffSpeedFrameRate:
+          type: number
+          example: 5
+        maxOffSpeedFrameRate:
+          type: number
+          example: 60
+        resolutionDescriptor:
+          $ref: '#/components/schemas/ResolutionDescriptor'
+    Format:
+      type: object
+      properties:
+        codec:
+          type: string
+          description: Codec format serialised as a string.
+          example: BRaw:8_1
+        frameRate:
+          $ref: '#/components/schemas/FrameRate'
+        maxOffSpeedFrameRate:
+          type: number
+          example: 60
+        minOffSpeedFrameRate:
+          type: number
+          example: 5
+        offSpeedEnabled:
+          type: boolean
+          example: false
+        offSpeedFrameRate:
+          type: number
+          example: 60
+        recordResolution:
+          $ref: '#/components/schemas/Resolution'
+        sensorResolution:
+          $ref: '#/components/schemas/Resolution'
+        resolutionDescriptor:
+          $ref: '#/components/schemas/ResolutionDescriptor'
+    FormatRequest:
+      type: object
+      description: Format update request. While fields are technically optional in the request, the system requires a complete valid format combination for successful update.
+      properties:
+        codec:
+          type: string
+          description: Codec format serialised as a string.
+          example: BRaw:8_1
+        frameRate:
+          $ref: '#/components/schemas/FrameRate'
+        offSpeedEnabled:
+          type: boolean
+          description: Enable or disable off-speed recording.
+          example: false
+        offSpeedFrameRate:
+          type: number
+          description: Frame rate for off-speed recording (must be within min/max range).
+          example: 60
+        recordResolution:
+          $ref: '#/components/schemas/Resolution'
+        sensorResolution:
+          $ref: '#/components/schemas/Resolution'
+    DynamicRange:
+      type: string
+      description: Dynamic range setting.
+      example: Video
+      enum:
+        - Video
+        - Film
+        - Extended Video
+        - PQ
+        - HLG
+        - DaVinci
+      x-bmd-list-source:
+        from: /system/supportedDynamicRanges
+        pointer: /supportedDynamicRanges
+        extract: items
+    DynamicRangeResponse:
+      type: object
+      description: Current dynamic range.
+      properties:
+        dynamicRange:
+          $ref: '#/components/schemas/DynamicRange'
+    SupportedDynamicRangesResponse:
+      type: object
+      description: List of supported dynamic ranges.
+      properties:
+        supportedDynamicRanges:
+          type: array
+          items:
+            $ref: '#/components/schemas/DynamicRange'
+    DynamicRangeRequest:
+      type: object
+      description: Dynamic range update request.
+      required:
+        - dynamicRange
+      properties:
+        dynamicRange:
+          $ref: '#/components/schemas/DynamicRange'

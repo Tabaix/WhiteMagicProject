@@ -1,0 +1,13 @@
+.class public final Lio/netty/handler/codec/http/ContentLengthNotAllowedException;
+.super Lio/netty/handler/codec/DecoderException;
+.source "SourceFile"
+
+
+# direct methods
+.method public constructor <init>(Ljava/lang/String;)V
+    .locals 0
+
+    invoke-direct {p0, p1}, Lio/netty/handler/codec/DecoderException;-><init>(Ljava/lang/String;)V
+
+    return-void
+.end method

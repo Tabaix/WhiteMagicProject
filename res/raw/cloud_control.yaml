@@ -1,0 +1,257 @@
+openapi: 3.0.1
+info:
+  title: Cloud Control API
+  description: API to manage Blackmagic Cloud projects and clip uploads.
+  version: 1.2.0
+servers:
+  - url: /control/api/v1
+tags:
+- name: Cloud
+  description: Cloud Control API
+paths:
+  /cloud/projects:
+    get:
+      operationId: getCloudProjects
+      summary: List all projects.
+      description: Returns an array of all Blackmagic Cloud projects, including project details and upload status.
+      tags:
+      - Cloud
+      responses:
+        200:
+          description: Successfully retrieved the list of all projects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectData'
+        204:
+          description: No projects available.
+
+  /cloud/projects/active:
+    get:
+      operationId: getCloudProjectActive
+      summary: Retrieve data of the active project.
+      description: Returns information about the currently active Blackmagic Cloud project.
+      tags:
+      - Cloud
+      responses:
+        200:
+          description: Successfully retrieved the active project's data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectData'
+        404:
+          description: No active project.
+
+  /cloud/projects/{projectID}:
+    get:
+      operationId: getCloudProject
+      summary: Retrieve specific project data by project ID.
+      description: Returns detailed information about a specific Blackmagic Cloud project.
+      tags:
+      - Cloud
+      parameters:
+        - in: path
+          name: projectID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+          description: Unique identifier of the Blackmagic Cloud project.
+          x-bmd-list-source:
+            from: /cloud/projects
+            extract: items
+            field: projectID
+      responses:
+        200:
+          description: Successfully retrieved the project data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectData'
+        404:
+          description: Project not found.
+
+  /cloud/clips:
+    get:
+      operationId: getCloudClips
+      summary: List all clips available for upload.
+      description: Returns an array of all clips that can be uploaded to Blackmagic Cloud.
+      tags:
+      - Cloud
+      responses:
+        200:
+          description: Successfully retrieved the list of all clips.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  description: REST path to the clip (deviceName/path).
+        204:
+          description: No clips available.
+
+  /cloud/clips/activeUploading:
+    get:
+      operationId: getCloudClipsActiveUploading
+      summary: Retrieve data of actively uploading clips.
+      description: Returns information about all clips that are currently being uploaded to Blackmagic Cloud.
+      tags:
+      - Cloud
+      responses:
+        200:
+          description: Successfully retrieved the list of actively uploading clips.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClipUploadData'
+        204:
+          description: No clips are currently being uploaded.
+
+  /cloud/clips/{deviceName}/{path}:
+    get:
+      operationId: getCloudClipUploadStatus
+      summary: Retrieve upload status for a specific clip.
+      description: Returns upload status information for a specific clip, including all projects it's associated with.
+      tags:
+      - Cloud
+      parameters:
+        - in: path
+          name: deviceName
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-zA-Z0-9\\-]+$"
+            maxLength: 64
+          description: Name of the device where the clip is stored.
+        - in: path
+          name: path
+          required: true
+          schema:
+            type: string
+            maxLength: 255
+          description: Path to the clip.
+      responses:
+        200:
+          description: Successfully retrieved the clip upload status for all associated projects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClipUploadData'
+        204:
+          description: No upload data for this clip.
+        400:
+          description: Missing deviceName or path parameter.
+        404:
+          description: Clip not found.
+
+components:
+  schemas:
+    ProjectData:
+      type: object
+      properties:
+        projectID:
+          type: integer
+          format: int64
+          description: Unique identifier of the Blackmagic Cloud project.
+        libraryID:
+          type: string
+          description: Cloud ID of the library containing this project.
+        name:
+          type: string
+          description: Name of the project.
+        private:
+          type: boolean
+          description: True if the project is private.
+        shared:
+          type: boolean
+          description: True if the project is shared.
+        clips:
+          type: array
+          items:
+            type: string
+          description: List of clips associated with the project.
+        status:
+          $ref: '#/components/schemas/ProjectUploadStatus'
+
+    ProjectUploadStatus:
+      type: object
+      properties:
+        numClipsRequested:
+          type: integer
+          description: Number of clips requested for upload.
+        numClipsComplete:
+          type: integer
+          description: Number of clips that have completed uploading.
+        uploadPercent:
+          type: integer
+          format: int32
+          description: Percentage of upload completion.
+        numClipsPaused:
+          type: integer
+          description: Number of clips paused in upload queue.
+        outOfSpace:
+          type: boolean
+          description: True if the project has run out of space in the cloud.
+        secsRemaining:
+          type: integer
+          description: Estimated seconds remaining until upload is completed. Value of -1 means calculation in progress.
+        currentByteRate:
+          type: integer
+          description: Current byte rate of the upload process.
+
+    ClipUploadData:
+      type: object
+      properties:
+        path:
+          type: string
+          description: REST path to the clip (deviceName/path).
+        projectID:
+          type: integer
+          description: ID of the project this clip is associated with.
+        status:
+          $ref: '#/components/schemas/ClipUploadStatus'
+
+    ClipUploadStatus:
+      type: object
+      properties:
+        projectID:
+          type: integer
+          description: ID of the project this status is for.
+        outOfSpace:
+          type: boolean
+          description: True if the project has run out of space in the cloud.
+        growingFile:
+          type: boolean
+          description: True if the clip is still being recorded/modified.
+        originalUploadState:
+          type: string
+          enum: [Unqueued, Paused, Queued, Uploading, Uploaded, Failed, Unknown]
+          description: Upload state of the original clip.
+        proxyUploadState:
+          type: string
+          enum: [Unqueued, Paused, Queued, Uploading, Uploaded, Failed, Unknown]
+          description: Upload state of the proxy clip.
+        originalClipTotalSize:
+          type: integer
+          description: Total size of the original clip in bytes.
+        proxyClipTotalSize:
+          type: integer
+          description: Total size of the proxy clip in bytes.
+        originalClipCompletedSize:
+          type: integer
+          description: Completed upload size of the original clip in bytes.
+        proxyClipCompletedSize:
+          type: integer
+          description: Completed upload size of the proxy clip in bytes.
+        secsRemaining:
+          type: integer
+          description: Estimated seconds remaining until upload is completed. Value of -1 means calculation in progress.

@@ -1,0 +1,3 @@
+.class interface abstract synthetic Lio/netty/util/internal/shaded/org/jctools/queues/unpadded/package-info;
+.super Ljava/lang/Object;
+.source "SourceFile"

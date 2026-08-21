@@ -1,0 +1,6 @@
+.class public interface abstract Lv10;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Lcom/google/protobuf/MessageOrBuilder;
